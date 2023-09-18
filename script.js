@@ -22,6 +22,7 @@ fetchUser(apiEp);
 
 const display = (users) => {
   let str = ``;
+
   userList.map((item, i) => {
     console.log(item);
     str += `<div class="card flex-grow-1" style="width: 18rem">
@@ -41,8 +42,9 @@ const display = (users) => {
           </li>
           <li>
           <i class="fa-solid fa-address-book"></i>
-          ${item?.location?.postcode}
-          ${item?.location?.street}
+          
+          ${item?.location?.street?.number}
+          ${item?.location?.street?.name}
           ${item?.location?.postcode}
           ${item?.location?.country}</li>
           
@@ -50,7 +52,35 @@ const display = (users) => {
       </div>
     </div>
   </div>`;
-
-    listElm.innerHTML = str;
   });
+  listElm.innerHTML = str;
+  document.getElementById("count").innerText = users.length;
 };
+
+const handleOnGenderSelect = (e) => {
+  console.log(e);
+
+  const g = e.value;
+  const url = `${apiEp}&gender=${g}`;
+  fetchUser(url);
+};
+
+// const func = (e) => {
+//   const { value } = e.value;
+// };
+
+//call back
+document.getElementById("search").addEventListener("keyup", (e) => {
+  const { value } = e.target.value;
+  console.log(value);
+
+  const filteredArg = userList.filter((user) => {
+    const fullName = `${user.name.first} ${user.name.last}`.toLowerCase();
+    console.log(fullName);
+
+    if (fullName.includes(value.toLowerCase())) {
+      return true;
+    }
+  });
+  display(filteredArg);
+});

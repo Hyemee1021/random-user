@@ -43,10 +43,11 @@
               type="text"
               class="form-control"
               placeholder="search by name"
+              id="search"
             />
           </div>
           <div class="col-md text-end">
-            <select class="form-control">
+            <select class="form-control" onchange="handleOnGenderSelect(this)">
               <option value="">-- select gender</option>
               <option value="male">male</option>
               <option value="female">female</option>
